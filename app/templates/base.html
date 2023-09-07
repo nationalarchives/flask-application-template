@@ -1,0 +1,51 @@
+{% from "components/footer.html" import tnaFooter -%}
+{% from "components/header.html" import tnaHeader -%}
+<!doctype html>
+<html lang="en-GB" class="tna-template tna-template--light-theme">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Example app</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+      <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  </head>
+  <body class="tna-template__body">
+    {%- set navigationItems = [] -%}
+    {%- for navigationItem in [
+      {
+        'text': "Alpha",
+        'href': "/alpha",
+        'selected': true
+      },
+      {
+        'text': "Beta",
+        'href': "/beta"
+      }
+    ] -%}
+      {{ navigationItems.append({
+        'text': navigationItem.text,
+        'href': navigationItem.href,
+        'selected': request.path.startswith(navigationItem.href)
+      }) or "" }}
+    {%- endfor -%}
+    {{ tnaHeader({
+      'logo': {
+        'href': '/'
+      },
+      'navigation': navigationItems,
+      'colour': 'yellow'
+    }) }}
+    <main id="main-content" role="main">
+      {% block main %}
+      <div class="tna-container">
+        <div class="tna-column tna-column--full">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+      {% endblock %}
+    </main>
+    {{ tnaFooter({}) }}
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
