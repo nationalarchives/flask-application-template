@@ -10,9 +10,11 @@ def breadcrumbs(page_id):
     ).json()
     return [
         {
-            "title": "Home"
-            if ancestor["meta"]["html_url"] == "http://localhost:65535/"
-            else ancestor["title"],
+            "title": (
+                "Home"
+                if ancestor["meta"]["html_url"] == "http://localhost:65535/"
+                else ancestor["title"]
+            ),
             "url": ancestor["meta"]["html_url"],
         }
         for ancestor in ancestors["items"]
@@ -123,9 +125,11 @@ def article_index_page(page_data):
             "id": child["id"],
             "title": child["title"],
             "url": child["meta"]["html_url"],
-            "supertitle": child["verbose_name_public"]
-            if "verbose_name_public" in child
-            else "",
+            "supertitle": (
+                child["verbose_name_public"]
+                if "verbose_name_public" in child
+                else ""
+            ),
         }
         for child in children_data["items"]
     ]
@@ -147,9 +151,11 @@ def article_index_page(page_data):
             "id": page["id"],
             "title": page["title"],
             "url": page["meta"]["html_url"],
-            "supertitle": page["verbose_name_public"]
-            if "verbose_name_public" in page
-            else "",
+            "supertitle": (
+                page["verbose_name_public"]
+                if "verbose_name_public" in page
+                else ""
+            ),
         }
         for page in featured_pages_data
     ]

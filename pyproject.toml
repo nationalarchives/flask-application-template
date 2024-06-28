@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ds-example-flask-application"
+name = "tna-flask-application"
 version = "0.1.0"
 description = ""
 authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
@@ -7,23 +7,28 @@ readme = "README.md"
 packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 flask = "^2.3.2"
-black = "23.7.0"
-flake8 = "6.1.0"
-isort = "5.12.0"
-gunicorn = "21.2.0"
-markdown = "^3.4.4"
+black = "^24.3.0"
+flake8 = "^6.1.0"
+isort = "^5.12.0"
 requests = "^2.31.0"
 flask-caching = "^2.1.0"
+tna-frontend-jinja = "0.1.33"
+flask-talisman = "^1.1.0"
+pytest = "^8.1.1"
+requests-mock = "^1.12.1"
+sentry-sdk = {extras = ["flask"], version = "^2.5.1"}
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.isort]
-profile = "black"
-
 [tool.black]
 line-length = 80
 include = '\.pyi?$'
+
+[tool.pytest.ini_options]
+testpaths = [
+    "test",
+]

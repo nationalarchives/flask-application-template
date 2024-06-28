@@ -1,82 +1,84 @@
-{% from "components/footer.html" import tnaFooter -%}
-{% from "components/header.html" import tnaHeader -%}
-<!doctype html>
-<html lang="en-GB" class="tna-template tna-template--light-theme tna-template--yellow-accent">
-  <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Example app</title>
-      <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
-      <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-      <link rel="preconnect" href="https://use.typekit.net">
-      <link rel="stylesheet" href="https://use.typekit.net/hkj3kuz.css">
-      <link href="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.1.25-prerelease/nationalarchives/all.css" rel="stylesheet" integrity="sha384-gdYgQYeruZ9U32SBS+VbzCwxhsePXFeFHxVdlccZcehaOKDr15RGsTPTeS6TqWSz" crossorigin="anonymous">
-  </head>
-  <body class="tna-template__body">
-    {% block bodyStart %}
-      {% block cookies %}{% endblock %}
-      {% block skipLink %}{% endblock %}
-    {% endblock %}
+{%- extends 'layouts/base.html' -%}
 
-    {% block header %}
-      {%- set navigationItems = [] -%}
-      {%- for navigationItem in [
-        {
-          'text': "Explore the collection",
-          'href': "/explore-the-collection"
-        }
-      ] -%}
-        {{ navigationItems.append({
-          'text': navigationItem.text,
-          'href': navigationItem.href,
-          'selected': request.path.startswith(navigationItem.href)
-        }) or "" }}
-      {%- endfor -%}
-      {{ tnaHeader({
-        'logo': {
-          'href': '/'
-        },
-        'navigation': navigationItems,
-        'accent': True
-      }) }}
-    {% endblock %}
+{%- from 'components/cookie-banner/macro.html' import tnaCookieBanner -%}
+{%- from 'components/footer/macro.html' import tnaFooter -%}
+{%- from 'components/header/macro.html' import tnaHeader -%}
 
-    {% block main %}
-      {% block beforeContent %}
-        {% if breadcrumbs and breadcrumbs | length > 0 %}
-        <div class="tna-container">
-          <div class="tna-column tna-column--full">
-            <nav class="tna-breadcrumbs " data-module="tna-breadcrumbs" aria-label="Breadcrumb">
-              <ol class="tna-breadcrumbs__list">
-                {% for item in breadcrumbs %}
-                <li class="tna-breadcrumbs__item">
-                  <a href="{{ item.url }}" class="tna-breadcrumbs__link">
-                    {{ item.title }}
-                  </a>
-                </li>
-                {% endfor %}
-              </ol>
-            </nav>
-          </div>
-        </div>
-        {% endif %}
-      {% endblock %}
-      <main class="tna-main-wrapper {{ mainClasses }}" id="main-content" role="main">
-        {% block content %}{% endblock %}
-      </main>
-      {% block afterContent %}{% endblock %}
-    {% endblock %}
+{%- set theme = request.cookies.get('theme') or 'light' -%}
+{%- set themeAccent = themeAccent if themeAccent else 'yellow' -%}
+{%- set htmlAttributes = {
+  'data-generated': now_iso_8601(),
+  'data-cookiesdomain': app_config.COOKIE_DOMAIN or "",
+  'data-version': app_config.BUILD_VERSION
+} -%}
 
-    {% block footer %}
-      {{ tnaFooter({}) }}
-    {% endblock %}
+{% block headIcons %}
+    <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="mask-icon" href="{{ url_for('static', filename='assets/images/mask-icon.svg') }}" color="{{ themeColor | default('#010101') }}">
+    <link rel="apple-touch-icon" sizes="48x48" href="{{ url_for('static', filename='assets/images/icon-48x48.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='assets/images/icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="96x96" href="{{ url_for('static', filename='assets/images/icon-96x96.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='assets/images/icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ url_for('static', filename='assets/images/icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='assets/images/icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{{ url_for('static', filename='assets/images/icon-167x167.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='assets/images/icon-180x180.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='assets/images/icon-192x192.png') }}">
+    <link rel="apple-touch-icon" sizes="256x256" href="{{ url_for('static', filename='assets/images/icon-256x256.png') }}">
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ url_for('static', filename='assets/images/icon-512x512.png') }}">
+    <link rel="apple-touch-icon" sizes="1024x1024" href="{{ url_for('static', filename='assets/images/icon-1024x1024.png') }}">
+{% endblock %}
 
-    {% block bodyEnd %}
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.1.25-prerelease/nationalarchives/all.js" integrity="sha384-EzjnJVygD9aLi7mkmysKfXApThCmiED1q5yN/ieQZZZMcLwPUuwwvd+nqZqaV0cW" crossorigin="anonymous"></script>
-    <script>
-      TNAFrontend.initAll()
-    </script>
-    {% endblock %}
-  </body>
-</html>
+{% block head %}
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta name="tna.view.theme" content="{{ theme }}">
+    <meta name="tna.response.status_code" content="{{ status_code | default('200') }}">
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="preconnect" href="https://use.typekit.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://use.typekit.net/kaq6qqh.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.css') }}">
+{% endblock %}
+
+{% block cookies %}
+{% if not page_data or not page_data.page_preview %}
+{% if 'cookie_preferences_set' not in request.cookies or not request.cookies.get('cookie_preferences_set') %}
+{{ tnaCookieBanner({
+  'serviceName': 'The National Archives',
+  'cookiesUrl': url_for('main.cookies'),
+  'cookiesDomain': app_config.COOKIE_DOMAIN
+}) }}
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block header %}
+{{ tnaHeader({
+  'logo': {
+    'href': url_for('main.index'),
+    'title': 'The National Archives home page'
+  },
+  'navigation': [
+    {
+      'text': 'Visit',
+      'href': 'https://www.nationalarchives.gov.uk/about/visit-us'
+    },
+  ]
+}) }}
+{% endblock %}
+
+{% block footer %}
+{{ tnaFooter({
+  'themeSelector': True,
+  'classes': 'tna-!--margin-top-l'
+}) }}
+{% endblock %}
+
+{% block bodyEnd %}
+<script src="{{ url_for('static', filename='main.min.js') }}" defer></script>
+<script src="{{ url_for('static', filename='analytics.min.js') }}" defer></script>
+{% endblock %}

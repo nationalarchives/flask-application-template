@@ -1,7 +1,10 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./src/scripts/app.js",
+  entry: {
+    main: "./src/scripts/main.js",
+    analytics: "./src/scripts/analytics.js",
+  },
   mode: "production",
   module: {
     rules: [
@@ -19,7 +22,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "app/static"),
-    filename: "app.js",
+    filename: "[name].min.js",
   },
   devtool: "source-map",
 };

@@ -1,15 +1,24 @@
-FROM ghcr.io/nationalarchives/tna-python:latest
+ARG IMAGE=ghcr.io/nationalarchives/tna-python
+ARG IMAGE_TAG=latest
 
-ENV NPM_BUILD_COMMAND=build
+FROM "$IMAGE":"$IMAGE_TAG"
+
+ENV NPM_BUILD_COMMAND=compile
+ARG BUILD_VERSION
+ENV BUILD_VERSION="$BUILD_VERSION"
 
 # Copy in the application code
 COPY --chown=app . .
 
-# Install the dependencies
+# Install dependencies
 RUN tna-build
 
-# Delete the source files
-RUN rm -fR /app/src
+# Copy in the static assets from TNA Frontend
+RUN mkdir /app/app/static/assets; \
+    cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets/* /app/app/static/assets
+
+# Delete source files and tests
+RUN rm -fR /app/src /app/test
 
 # Run the application
-CMD ["tna-run", "my-app:app"]
+CMD ["tna-run", "flask_app:app"]
