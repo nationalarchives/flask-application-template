@@ -48,3 +48,9 @@ In addition to the [base Docker image variables](https://github.com/nationalarch
 ```sh
 poetry run python -m pytest
 ```
+
+## Format and debug code
+
+```sh
+docker compose exec dev format
+```
