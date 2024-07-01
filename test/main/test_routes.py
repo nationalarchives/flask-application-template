@@ -28,6 +28,6 @@ class MainBlueprintTestCase(unittest.TestCase):
         )
 
     def test_cookies(self):
-        rv = self.app.get("/")
+        rv = self.app.get("/cookies/")
         self.assertEqual(rv.status_code, 200)
         self.assertIn('<h1 class="tna-heading-xl">Cookies</h1>', rv.text)
