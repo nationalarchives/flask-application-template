@@ -1,4 +1,4 @@
-name: Clean up feature branch
+name: Delete container image
 
 on:
   delete:
@@ -13,7 +13,7 @@ jobs:
         id: version-tag
         run: echo "VERSION=$(echo "${{ github.event.ref }}" | sed -e 's,/,-,g')" >> "$GITHUB_OUTPUT"
       - name: Debug
-        run: echo "Clean up Docker image v${{ steps.version-tag.outputs.VERSION }}"
+        run: echo "Delete container image ${{ steps.version-tag.outputs.VERSION }}"
       - name: Delete image
         if: ${{ steps.version-tag.outputs.VERSION }}
         uses: bots-house/ghcr-delete-image-action@v1.1.0

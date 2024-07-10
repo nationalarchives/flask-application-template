@@ -12,5 +12,5 @@ jobs:
       - name: Remove untagged Docker images
         uses: nationalarchives/ds-docker-actions/.github/actions/remove-untagged@main
         with:
-          docker-image-name: ${{ vars.DOCKER_IMAGE_NAME }}
+          docker-image-name: example-flask-application
           github-token: ${{ secrets.GITHUB_TOKEN }}
