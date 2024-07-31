@@ -1,12 +1,7 @@
 import logging
 
-from app.lib import cache
-from app.lib.context_processor import (
-    cookie_preference,
-    merge_dict,
-    merge_dict_if,
-    now_iso_8601,
-)
+from app.lib.cache import cache
+from app.lib.context_processor import cookie_preference, now_iso_8601
 from app.lib.template_filters import slugify
 from flask import Flask
 from flask_talisman import Talisman
@@ -24,10 +19,10 @@ def create_app(config_class):
     cache.init_app(
         app,
         config={
-            "CACHE_TYPE": app.config["CACHE_TYPE"],
-            "CACHE_DEFAULT_TIMEOUT": app.config["CACHE_DEFAULT_TIMEOUT"],
-            "CACHE_IGNORE_ERRORS": app.config["CACHE_IGNORE_ERRORS"],
-            "CACHE_DIR": app.config["CACHE_DIR"],
+            "CACHE_TYPE": app.config.get("CACHE_TYPE"),
+            "CACHE_DEFAULT_TIMEOUT": app.config.get("CACHE_DEFAULT_TIMEOUT"),
+            "CACHE_IGNORE_ERRORS": app.config.get("CACHE_IGNORE_ERRORS"),
+            "CACHE_DIR": app.config.get("CACHE_DIR"),
         },
     )
 
@@ -40,72 +35,70 @@ def create_app(config_class):
             "base-uri": csp_none,
             "object-src": csp_none,
             **(
-                {"img-src": app.config["CSP_IMG_SRC"]}
-                if app.config["CSP_IMG_SRC"] != csp_self
+                {"img-src": app.config.get("CSP_IMG_SRC")}
+                if app.config.get("CSP_IMG_SRC") != csp_self
                 else {}
             ),
             **(
-                {"script-src": app.config["CSP_SCRIPT_SRC"]}
-                if app.config["CSP_SCRIPT_SRC"] != csp_self
+                {"script-src": app.config.get("CSP_SCRIPT_SRC")}
+                if app.config.get("CSP_SCRIPT_SRC") != csp_self
                 else {}
             ),
             **(
-                {"script-src-elem": app.config["CSP_SCRIPT_SRC_ELEM"]}
-                if app.config["CSP_SCRIPT_SRC_ELEM"] != csp_self
+                {"script-src-elem": app.config.get("CSP_SCRIPT_SRC_ELEM")}
+                if app.config.get("CSP_SCRIPT_SRC_ELEM") != csp_self
                 else {}
             ),
             **(
-                {"style-src": app.config["CSP_STYLE_SRC"]}
-                if app.config["CSP_STYLE_SRC"] != csp_self
+                {"style-src": app.config.get("CSP_STYLE_SRC")}
+                if app.config.get("CSP_STYLE_SRC") != csp_self
                 else {}
             ),
             **(
-                {"font-src": app.config["CSP_FONT_SRC"]}
-                if app.config["CSP_FONT_SRC"] != csp_self
+                {"font-src": app.config.get("CSP_FONT_SRC")}
+                if app.config.get("CSP_FONT_SRC") != csp_self
                 else {}
             ),
             **(
-                {"connect-src": app.config["CSP_CONNECT_SRC"]}
-                if app.config["CSP_CONNECT_SRC"] != csp_self
+                {"connect-src": app.config.get("CSP_CONNECT_SRC")}
+                if app.config.get("CSP_CONNECT_SRC") != csp_self
                 else {}
             ),
             **(
-                {"media-src": app.config["CSP_MEDIA_SRC"]}
-                if app.config["CSP_MEDIA_SRC"] != csp_self
+                {"media-src": app.config.get("CSP_MEDIA_SRC")}
+                if app.config.get("CSP_MEDIA_SRC") != csp_self
                 else {}
             ),
             **(
-                {"worker-src": app.config["CSP_WORKER_SRC"]}
-                if app.config["CSP_WORKER_SRC"] != csp_self
+                {"worker-src": app.config.get("CSP_WORKER_SRC")}
+                if app.config.get("CSP_WORKER_SRC") != csp_self
                 else {}
             ),
             **(
-                {"frame-src": app.config["CSP_FRAME_SRC"]}
-                if app.config["CSP_FRAME_SRC"] != csp_self
+                {"frame-src": app.config.get("CSP_FRAME_SRC")}
+                if app.config.get("CSP_FRAME_SRC") != csp_self
                 else {}
             ),
         },
         # content_security_policy_nonce_in=["script-src", "style-src"],
         feature_policy={
             "camera": csp_none,
-            "fullscreen": csp_self,
+            "fullscreen": app.config.get("CSP_FEATURE_FULLSCREEN") or csp_self,
             "geolocation": csp_none,
             "microphone": csp_none,
             "screen-wake-lock": csp_none,
         },
         force_https=app.config["FORCE_HTTPS"],
-        frame_options="ALLOW-FROM",
-        frame_options_allow_from=app.config["FRAME_DOMAIN_ALLOW"],
     )
 
     @app.after_request
     def apply_extra_headers(response):
         response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
-        response.headers["Cross-Origin-Embedder-Policy"] = "credentialless"
+        response.headers["Cross-Origin-Embedder-Policy"] = "unsafe-none"
         response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
         response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
         response.headers["Cache-Control"] = (
-            f"public, max-age={app.config['CACHE_HEADER_DURATION']}"
+            f"public, max-age={app.config.get('CACHE_HEADER_DURATION')}"
         )
         return response
 
@@ -123,8 +116,6 @@ def create_app(config_class):
     @app.context_processor
     def context_processor():
         return dict(
-            merge_dict=merge_dict,
-            merge_dict_if=merge_dict_if,
             cookie_preference=cookie_preference,
             now_iso_8601=now_iso_8601,
             app_config=app.config,

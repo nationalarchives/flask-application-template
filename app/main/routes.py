@@ -1,4 +1,5 @@
-from app.lib import cache, cache_key_prefix
+from app.lib.cache import cache
+from app.lib.cache_key_prefix import cache_key_prefix
 from app.main import bp
 from flask import render_template
 

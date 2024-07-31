@@ -16,6 +16,11 @@ requests = "^2.31.0"
 flask-caching = "^2.1.0"
 tna-frontend-jinja = "0.1.33"
 flask-talisman = "^1.1.0"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
 pytest = "^8.1.1"
 requests-mock = "^1.12.1"
 
