@@ -118,7 +118,14 @@ def create_app(config_class):
         return dict(
             cookie_preference=cookie_preference,
             now_iso_8601=now_iso_8601,
-            app_config=app.config,
+            app_config={
+                "ENVIRONMENT": app.config.get("ENVIRONMENT"),
+                "TNA_FRONTEND_VERSION": app.config.get("TNA_FRONTEND_VERSION"),
+                "BUILD_VERSION": app.config.get("BUILD_VERSION"),
+                "COOKIE_DOMAIN": app.config.get("COOKIE_DOMAIN"),
+                "GA4_ID": app.config.get("GA4_ID"),
+            },
+            feature={},
         )
 
     from .healthcheck import bp as healthcheck_bp
