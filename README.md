@@ -16,6 +16,18 @@ mkdir app/static/assets
 cp -r node_modules/@nationalarchives/frontend/nationalarchives/assets/* app/static/assets
 ```
 
+### Run tests
+
+```sh
+docker compose exec dev poetry run python -m pytest
+```
+
+### Format and lint code
+
+```sh
+docker compose exec dev format
+```
+
 ## Environment variables
 
 In addition to the [base Docker image variables](https://github.com/nationalarchives/docker/blob/main/docker/tna-python/README.md#environment-variables), this application has support for:
@@ -45,15 +57,3 @@ In addition to the [base Docker image variables](https://github.com/nationalarch
 | `GA4_ID`                         | The Google Analytics 4 ID                                                   | _none_                                                    |
 
 [^1] [Debugging in Flask](https://flask.palletsprojects.com/en/2.3.x/debugging/)
-
-## Running tests
-
-```sh
-docker compose exec dev poetry run python -m pytest
-```
-
-## Format and debug code
-
-```sh
-docker compose exec dev format
-```
