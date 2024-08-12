@@ -13,12 +13,12 @@ jobs:
         id: version-tag
         run: echo "VERSION=$(echo "${{ github.event.ref }}" | sed -e 's,/,-,g')" >> "$GITHUB_OUTPUT"
       - name: Debug
-        run: echo "Clean up Docker image example-flask-application:${{ steps.version-tag.outputs.VERSION }}"
+        run: echo "Clean up Docker image ${{ vars.DOCKER_IMAGE_NAME }}:${{ steps.version-tag.outputs.VERSION }}"
       - name: Delete image
         if: ${{ steps.version-tag.outputs.VERSION }}
         uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:
           owner: ${{ github.repository_owner }}
-          name: example-flask-application
+          name: ${{ vars.DOCKER_IMAGE_NAME }}
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.version-tag.outputs.VERSION }}

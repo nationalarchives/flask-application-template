@@ -49,4 +49,4 @@ jobs:
           version: ${{ needs.version.outputs.version }}
           latest: ${{ github.ref == 'refs/heads/main' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          docker-image-name: example-flask-application
+          docker-image-name: ${{ vars.DOCKER_IMAGE_NAME }}
