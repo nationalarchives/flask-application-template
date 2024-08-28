@@ -77,22 +77,15 @@ class Base(object):
     )
     CACHE_IGNORE_ERRORS: bool = True
     CACHE_DIR: str = os.environ.get("CACHE_DIR", "/tmp")
-    CACHE_HEADER_DURATION: int = int(os.getenv("CACHE_HEADER_DURATION", "1"))
 
     GA4_ID = os.environ.get("GA4_ID", "")
 
 
 class Production(Base, Features):
-    CACHE_HEADER_DURATION = int(
-        os.environ.get("CACHE_HEADER_DURATION", "604800")
-    )  # 1 week
-
-    # TODO: This invalidates the CSP nonces
     CACHE_DEFAULT_TIMEOUT = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "300"))
 
 
 class Staging(Base, Features):
-    # TODO: This invalidates the CSP nonces
     CACHE_DEFAULT_TIMEOUT = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "60"))
 
 
@@ -111,6 +104,5 @@ class Test(Base, Features):
 
     CACHE_TYPE = "SimpleCache"
     CACHE_DEFAULT_TIMEOUT = 1
-    CACHE_HEADER_DURATION = 0
 
     FORCE_HTTPS = False
