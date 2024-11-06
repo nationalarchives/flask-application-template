@@ -17,6 +17,7 @@ services:
       - 81:8080
     volumes:
       - ./:/app
+
   dev:
     image: ghcr.io/nationalarchives/tna-python-dev:preview
     volumes:

@@ -1,5 +1,6 @@
 .dockerignore
 .git
+.gitkeep
 docker-compose.yml
 Dockerfile
 README.md
