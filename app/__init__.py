@@ -2,9 +2,9 @@ import logging
 
 from app.lib.cache import cache
 from app.lib.context_processor import cookie_preference, now_iso_8601
+from app.lib.talisman import talisman
 from app.lib.template_filters import slugify
 from flask import Flask
-from flask_talisman import Talisman
 from jinja2 import ChoiceLoader, PackageLoader
 
 
@@ -28,7 +28,7 @@ def create_app(config_class):
 
     csp_self = "'self'"
     csp_none = "'none'"
-    Talisman(
+    talisman.init_app(
         app,
         content_security_policy={
             "default-src": csp_self,
