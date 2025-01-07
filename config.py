@@ -9,8 +9,6 @@ class Features(object):
 
 
 class Base(object):
-    ENVIRONMENT_NAME: str = os.environ.get("ENVIRONMENT_NAME", "production")
-
     BUILD_VERSION: str = os.environ.get("BUILD_VERSION", "")
     TNA_FRONTEND_VERSION: str = ""
     try:
@@ -96,8 +94,6 @@ class Develop(Base, Features):
 
 
 class Test(Base, Features):
-    ENVIRONMENT_NAME = "test"
-
     DEBUG = True
     TESTING = True
     EXPLAIN_TEMPLATE_LOADING = True
