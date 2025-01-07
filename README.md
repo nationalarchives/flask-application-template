@@ -37,6 +37,7 @@ In addition to the [base Docker image variables](https://github.com/nationalarch
 
 | Variable                         | Purpose                                                                     | Default                                                   |
 | -------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `ENVIRONMENT_NAME`               | The name of the environment (for reporting purposes)                        | `production`                                              |
 | `CONFIG`                         | The configuration to use                                                    | `config.Production`                                       |
 | `DEBUG`                          | If true, allow debugging[^1]                                                | `False`                                                   |
 | `COOKIE_DOMAIN`                  | The domain to save cookie preferences against                               | _none_                                                    |

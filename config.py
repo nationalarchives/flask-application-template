@@ -9,7 +9,7 @@ class Features(object):
 
 
 class Base(object):
-    ENVIRONMENT: str = os.environ.get("ENVIRONMENT", "production")
+    ENVIRONMENT_NAME: str = os.environ.get("ENVIRONMENT_NAME", "production")
 
     BUILD_VERSION: str = os.environ.get("BUILD_VERSION", "")
     TNA_FRONTEND_VERSION: str = ""
@@ -96,7 +96,7 @@ class Develop(Base, Features):
 
 
 class Test(Base, Features):
-    ENVIRONMENT = "test"
+    ENVIRONMENT_NAME = "test"
 
     DEBUG = True
     TESTING = True
