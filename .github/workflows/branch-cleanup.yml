@@ -3,9 +3,13 @@ name: Clean up feature branch
 on:
   delete:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   delete:
-    if: github.event.ref_type == 'branch' && startsWith(github.event.ref, 'feature/')
+    if: github.event.ref_type == 'branch' && github.event.ref != 'main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

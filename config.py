@@ -34,33 +34,19 @@ class Base(object):
     COOKIE_DOMAIN: str = os.environ.get("COOKIE_DOMAIN", "")
 
     CSP_IMG_SRC: list[str] = os.environ.get("CSP_IMG_SRC", "'self'").split(",")
-    CSP_SCRIPT_SRC: list[str] = os.environ.get(
-        "CSP_SCRIPT_SRC", "'self'"
-    ).split(",")
+    CSP_SCRIPT_SRC: list[str] = os.environ.get("CSP_SCRIPT_SRC", "'self'").split(",")
     CSP_SCRIPT_SRC_ELEM: list[str] = os.environ.get(
         "CSP_SCRIPT_SRC_ELEM", "'self'"
     ).split(",")
-    CSP_STYLE_SRC: list[str] = os.environ.get("CSP_STYLE_SRC", "'self'").split(
-        ","
-    )
+    CSP_STYLE_SRC: list[str] = os.environ.get("CSP_STYLE_SRC", "'self'").split(",")
     CSP_STYLE_SRC_ELEM: list[str] = os.environ.get(
         "CSP_STYLE_SRC_ELEM", "'self'"
     ).split(",")
-    CSP_FONT_SRC: list[str] = os.environ.get("CSP_FONT_SRC", "'self'").split(
-        ","
-    )
-    CSP_CONNECT_SRC: list[str] = os.environ.get(
-        "CSP_CONNECT_SRC", "'self'"
-    ).split(",")
-    CSP_MEDIA_SRC: list[str] = os.environ.get("CSP_MEDIA_SRC", "'self'").split(
-        ","
-    )
-    CSP_WORKER_SRC: list[str] = os.environ.get(
-        "CSP_WORKER_SRC", "'self'"
-    ).split(",")
-    CSP_FRAME_SRC: list[str] = os.environ.get("CSP_FRAME_SRC", "'self'").split(
-        ","
-    )
+    CSP_FONT_SRC: list[str] = os.environ.get("CSP_FONT_SRC", "'self'").split(",")
+    CSP_CONNECT_SRC: list[str] = os.environ.get("CSP_CONNECT_SRC", "'self'").split(",")
+    CSP_MEDIA_SRC: list[str] = os.environ.get("CSP_MEDIA_SRC", "'self'").split(",")
+    CSP_WORKER_SRC: list[str] = os.environ.get("CSP_WORKER_SRC", "'self'").split(",")
+    CSP_FRAME_SRC: list[str] = os.environ.get("CSP_FRAME_SRC", "'self'").split(",")
     CSP_FEATURE_FULLSCREEN: list[str] = os.environ.get(
         "CSP_FEATURE_FULLSCREEN", "'self'"
     ).split(",")
@@ -70,9 +56,7 @@ class Base(object):
     FORCE_HTTPS: bool = strtobool(os.getenv("FORCE_HTTPS", "True"))
 
     CACHE_TYPE: str = "FileSystemCache"
-    CACHE_DEFAULT_TIMEOUT: int = int(
-        os.environ.get("CACHE_DEFAULT_TIMEOUT", "1")
-    )
+    CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "300"))
     CACHE_IGNORE_ERRORS: bool = True
     CACHE_DIR: str = os.environ.get("CACHE_DIR", "/tmp")
 
@@ -80,7 +64,7 @@ class Base(object):
 
 
 class Production(Base, Features):
-    CACHE_DEFAULT_TIMEOUT = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "300"))
+    pass
 
 
 class Staging(Base, Features):
@@ -88,9 +72,7 @@ class Staging(Base, Features):
 
 
 class Develop(Base, Features):
-    DEBUG = strtobool(os.getenv("DEBUG", "True"))
-
-    FORCE_HTTPS = strtobool(os.getenv("FORCE_HTTPS", "False"))
+    CACHE_DEFAULT_TIMEOUT = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "1"))
 
 
 class Test(Base, Features):
@@ -102,3 +84,4 @@ class Test(Base, Features):
     CACHE_DEFAULT_TIMEOUT = 1
 
     FORCE_HTTPS = False
+    PREFERRED_URL_SCHEME = "http"
