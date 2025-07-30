@@ -20,6 +20,8 @@ services:
       - ./:/app
 
   dev:
+    environment:
+      - CONFIG=config.Test
     image: ghcr.io/nationalarchives/tna-python-dev:preview
     volumes:
       - ./:/app
