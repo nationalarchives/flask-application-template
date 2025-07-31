@@ -29,70 +29,41 @@ def create_app(config_class):
 
     csp_self = "'self'"
     csp_none = "'none'"
+    default_csp = csp_self
+    csp_rules = {
+        key.replace("_", "-"): value
+        for key, value in app.config.get_namespace(
+            "CSP_", lowercase=True, trim_namespace=True
+        ).items()
+        if not key.startswith("feature_") and value not in [None, [default_csp]]
+    }
     talisman.init_app(
         app,
         content_security_policy={
-            "default-src": csp_self,
+            "default-src": default_csp,
             "base-uri": csp_none,
             "object-src": csp_none,
-            **(
-                {"img-src": app.config.get("CSP_IMG_SRC")}
-                if app.config.get("CSP_IMG_SRC") != csp_self
-                else {}
-            ),
-            **(
-                {"script-src": app.config.get("CSP_SCRIPT_SRC")}
-                if app.config.get("CSP_SCRIPT_SRC") != csp_self
-                else {}
-            ),
-            **(
-                {"style-src": app.config.get("CSP_STYLE_SRC")}
-                if app.config.get("CSP_STYLE_SRC") != csp_self
-                else {}
-            ),
-            **(
-                {"font-src": app.config.get("CSP_FONT_SRC")}
-                if app.config.get("CSP_FONT_SRC") != csp_self
-                else {}
-            ),
-            **(
-                {"connect-src": app.config.get("CSP_CONNECT_SRC")}
-                if app.config.get("CSP_CONNECT_SRC") != csp_self
-                else {}
-            ),
-            **(
-                {"media-src": app.config.get("CSP_MEDIA_SRC")}
-                if app.config.get("CSP_MEDIA_SRC") != csp_self
-                else {}
-            ),
-            **(
-                {"worker-src": app.config.get("CSP_WORKER_SRC")}
-                if app.config.get("CSP_WORKER_SRC") != csp_self
-                else {}
-            ),
-            **(
-                {"frame-src": app.config.get("CSP_FRAME_SRC")}
-                if app.config.get("CSP_FRAME_SRC") != csp_self
-                else {}
-            ),
-        },
-        # content_security_policy_nonce_in=["script-src", "style-src"],
+        }
+        | csp_rules,
         feature_policy={
-            "camera": csp_none,
-            "fullscreen": app.config.get("CSP_FEATURE_FULLSCREEN") or csp_self,
-            "geolocation": csp_none,
-            "microphone": csp_none,
-            "screen-wake-lock": csp_none,
+            "fullscreen": app.config.get("CSP_FEATURE_FULLSCREEN", csp_self),
+            "picture-in-picture": app.config.get(
+                "CSP_FEATURE_PICTURE_IN_PICTURE", csp_self
+            ),
         },
         force_https=app.config["FORCE_HTTPS"],
     )
 
     @app.after_request
     def apply_extra_headers(response):
-        response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
-        response.headers["Cross-Origin-Embedder-Policy"] = "unsafe-none"
-        response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
-        response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
+        if "X-Permitted-Cross-Domain-Policies" not in response.headers:
+            response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
+        if "Cross-Origin-Embedder-Policy" not in response.headers:
+            response.headers["Cross-Origin-Embedder-Policy"] = "unsafe-none"
+        if "Cross-Origin-Opener-Policy" not in response.headers:
+            response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+        if "Cross-Origin-Resource-Policy" not in response.headers:
+            response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
         return response
 
     app.jinja_env.trim_blocks = True
@@ -112,6 +83,7 @@ def create_app(config_class):
             cookie_preference=cookie_preference,
             now_iso_8601=now_iso_8601,
             app_config={
+                "ENVIRONMENT_NAME": app.config.get("ENVIRONMENT_NAME"),
                 "TNA_FRONTEND_VERSION": app.config.get("TNA_FRONTEND_VERSION"),
                 "BUILD_VERSION": app.config.get("BUILD_VERSION"),
                 "COOKIE_DOMAIN": app.config.get("COOKIE_DOMAIN"),
