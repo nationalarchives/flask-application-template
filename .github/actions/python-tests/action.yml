@@ -7,8 +7,8 @@ runs:
       with:
         python-version: 3.13
     - name: Start Docker containers
-      run: docker compose up --detach --wait --wait-timeout 300 || docker compose logs app
+      run: docker compose up --detach --wait --wait-timeout 300 dev || docker compose logs dev
       shell: bash
-    - name: Run tests in the app Docker container
+    - name: Run tests in the dev Docker container
       run: docker compose exec dev poetry run python -m pytest
       shell: bash
