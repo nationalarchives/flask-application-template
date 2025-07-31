@@ -4,11 +4,11 @@ import os
 from app.lib.util import strtobool
 
 
-class Features(object):
+class Features:
     pass
 
 
-class Base(object):
+class Base:
     BUILD_VERSION: str = os.environ.get("BUILD_VERSION", "")
     TNA_FRONTEND_VERSION: str = ""
     try:
