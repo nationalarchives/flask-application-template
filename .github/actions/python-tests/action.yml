@@ -6,9 +6,9 @@ runs:
     - uses: actions/setup-python@v5
       with:
         python-version: 3.13
-    - name: Start Docker containers
+    - name: Start dev container
       run: docker compose up --detach --wait --wait-timeout 300 dev || docker compose logs dev
       shell: bash
-    - name: Run tests in the dev Docker container
+    - name: Run tests in the dev container
       run: docker compose exec dev poetry run python -m pytest
       shell: bash
