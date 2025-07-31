@@ -41,6 +41,9 @@ class Base(object):
     CSP_MEDIA_SRC: list[str] = os.environ.get("CSP_MEDIA_SRC", "'self'").split(",")
     CSP_WORKER_SRC: list[str] = os.environ.get("CSP_WORKER_SRC", "'self'").split(",")
     CSP_FRAME_SRC: list[str] = os.environ.get("CSP_FRAME_SRC", "'self'").split(",")
+    CSP_FRAME_ANCESTORS: list[str] = os.environ.get(
+        "CSP_FRAME_ANCESTORS", "'self'"
+    ).split(",")
     CSP_FEATURE_FULLSCREEN: list[str] = os.environ.get(
         "CSP_FEATURE_FULLSCREEN", "'self'"
     ).split(",")
@@ -48,11 +51,13 @@ class Base(object):
         "CSP_FEATURE_PICTURE_IN_PICTURE", "'self'"
     ).split(",")
     FORCE_HTTPS: bool = strtobool(os.getenv("FORCE_HTTPS", "True"))
+    PREFERRED_URL_SCHEME: str = os.getenv("PREFERRED_URL_SCHEME", "https")
 
     CACHE_TYPE: str = "FileSystemCache"
-    CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "300"))
+    CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "900"))
     CACHE_IGNORE_ERRORS: bool = True
     CACHE_DIR: str = os.environ.get("CACHE_DIR", "/tmp")
+    CACHE_REDIS_URL: str = os.environ.get("CACHE_REDIS_URL", "")
 
     GA4_ID = os.environ.get("GA4_ID", "")
 
@@ -70,9 +75,12 @@ class Develop(Base, Features):
 
 
 class Test(Base, Features):
-    DEBUG = True
-    TESTING = True
-    EXPLAIN_TEMPLATE_LOADING = True
+    ENVIRONMENT_NAME: str = "test"
+
+    SECRET_KEY: str = "abc123"
+    DEBUG: bool = True
+    TESTING: bool = True
+    EXPLAIN_TEMPLATE_LOADING: bool = True
 
     CACHE_TYPE = "SimpleCache"
     CACHE_DEFAULT_TIMEOUT = 1
