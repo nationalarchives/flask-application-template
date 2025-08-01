@@ -59,7 +59,7 @@ class Base:
     CACHE_DIR: str = os.environ.get("CACHE_DIR", "/tmp")
     CACHE_REDIS_URL: str = os.environ.get("CACHE_REDIS_URL", "")
 
-    GA4_ID = os.environ.get("GA4_ID", "")
+    GA4_ID: str = os.environ.get("GA4_ID", "")
 
 
 class Production(Base, Features):
@@ -67,11 +67,11 @@ class Production(Base, Features):
 
 
 class Staging(Base, Features):
-    CACHE_DEFAULT_TIMEOUT = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "60"))
+    CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "60"))
 
 
 class Develop(Base, Features):
-    CACHE_DEFAULT_TIMEOUT = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "1"))
+    CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "1"))
 
 
 class Test(Base, Features):
@@ -82,8 +82,8 @@ class Test(Base, Features):
     TESTING: bool = True
     EXPLAIN_TEMPLATE_LOADING: bool = True
 
-    CACHE_TYPE = "SimpleCache"
-    CACHE_DEFAULT_TIMEOUT = 1
+    CACHE_TYPE: str = "SimpleCache"
+    CACHE_DEFAULT_TIMEOUT: int = 1
 
-    FORCE_HTTPS = False
-    PREFERRED_URL_SCHEME = "http"
+    FORCE_HTTPS: bool = False
+    PREFERRED_URL_SCHEME: str = "http"
