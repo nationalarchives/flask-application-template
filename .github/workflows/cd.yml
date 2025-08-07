@@ -29,18 +29,6 @@ jobs:
       - name: Run tests
         uses: ./.github/actions/python-tests
 
-  version:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - name: Get tag
-        id: version-tag
-        uses: nationalarchives/ds-docker-actions/.github/actions/get-version-tag@main
-    outputs:
-      version: ${{ steps.version-tag.outputs.version-tag }}
-
   build:
     runs-on: ubuntu-latest
     needs:
