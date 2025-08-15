@@ -8,7 +8,7 @@ class Features:
     pass
 
 
-class Base:
+class Production(Features):
     CONTAINER_IMAGE: str = os.environ.get("CONTAINER_IMAGE", "")
     BUILD_VERSION: str = os.environ.get("BUILD_VERSION", "")
     TNA_FRONTEND_VERSION: str = ""
@@ -63,19 +63,15 @@ class Base:
     GA4_ID: str = os.environ.get("GA4_ID", "")
 
 
-class Production(Base, Features):
-    pass
-
-
-class Staging(Base, Features):
+class Staging(Production):
     CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "60"))
 
 
-class Develop(Base, Features):
+class Develop(Production):
     CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "1"))
 
 
-class Test(Base, Features):
+class Test(Production):
     ENVIRONMENT_NAME: str = "test"
 
     SECRET_KEY: str = "abc123"
