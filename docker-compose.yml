@@ -8,7 +8,6 @@ services:
     environment:
       - RUNTIME=develop
       - ENVIRONMENT_NAME=develop
-      - NODE_ENV=development
       - ALLOW_INSECURE=true
       - CONFIG=config.Develop
       - DEBUG=true
