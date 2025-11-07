@@ -51,6 +51,7 @@ In addition to the [base Docker image variables](https://github.com/nationalarch
 | `CSP_FRAME_ANCESTORS`            | A comma separated list of CSP rules for `frame-accestors`                   | `'self'`                                                  |
 | `CSP_FEATURE_FULLSCREEN`         | A comma separated list of rules for the `fullscreen` feature policy         | `'self'`                                                  |
 | `CSP_FEATURE_PICTURE_IN_PICTURE` | A comma separated list of rules for the `picture-in-picture` feature policy | `'self'`                                                  |
+| `CSP_REPORT_URL`                 | The URL to report CSP violations to                                         | _none_                                                    |
 | `FORCE_HTTPS`                    | Redirect requests to HTTPS as part of the CSP                               | _none_                                                    |
 | `CACHE_TYPE`                     | https://flask-caching.readthedocs.io/en/latest/#configuring-flask-caching   | _none_                                                    |
 | `CACHE_DEFAULT_TIMEOUT`          | The number of seconds to cache pages for                                    | production: `300`, staging: `60`, develop: `0`, test: `0` |

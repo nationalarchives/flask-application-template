@@ -51,6 +51,9 @@ class Production(Features):
     CSP_FEATURE_PICTURE_IN_PICTURE: list[str] = os.environ.get(
         "CSP_FEATURE_PICTURE_IN_PICTURE", "'self'"
     ).split(",")
+    CSP_REPORT_URL: str = os.environ.get("CSP_REPORT_URL", "")
+    if CSP_REPORT_URL:
+        CSP_REPORT_URL += f"&sentry_release={BUILD_VERSION}" if BUILD_VERSION else ""
     FORCE_HTTPS: bool = strtobool(os.getenv("FORCE_HTTPS", "True"))
     PREFERRED_URL_SCHEME: str = os.getenv("PREFERRED_URL_SCHEME", "https")
 
