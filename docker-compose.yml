@@ -6,8 +6,8 @@ services:
         IMAGE: ghcr.io/nationalarchives/tna-python-root
         IMAGE_TAG: 0
     environment:
-      - RUNTIME=develop
       - ENVIRONMENT_NAME=localhost
+      - RUNTIME=develop
       - ALLOW_INSECURE=true
       - CONFIG=config.Develop
       - DEBUG=true
