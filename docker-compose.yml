@@ -7,7 +7,7 @@ services:
         IMAGE_TAG: 0
     environment:
       - RUNTIME=develop
-      - ENVIRONMENT_NAME=develop
+      - ENVIRONMENT_NAME=localhost
       - ALLOW_INSECURE=true
       - CONFIG=config.Develop
       - DEBUG=true
