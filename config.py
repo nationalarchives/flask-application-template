@@ -31,7 +31,7 @@ class Production(Features):
 
     SECRET_KEY: str = os.environ.get("SECRET_KEY", "")
 
-    DEBUG: bool = strtobool(os.getenv("DEBUG", "False"))
+    DEBUG: bool = False
 
     COOKIE_DOMAIN: str = os.environ.get("COOKIE_DOMAIN", "")
 
@@ -55,7 +55,7 @@ class Production(Features):
     CSP_REPORT_URL: str = os.environ.get("CSP_REPORT_URL", "")
     if CSP_REPORT_URL:
         CSP_REPORT_URL += f"&sentry_release={BUILD_VERSION}" if BUILD_VERSION else ""
-    FORCE_HTTPS: bool = strtobool(os.getenv("FORCE_HTTPS", "True"))
+    FORCE_HTTPS: bool = strtobool(os.getenv("FORCE_HTTPS", "False"))
     PREFERRED_URL_SCHEME: str = os.getenv("PREFERRED_URL_SCHEME", "https")
 
     CACHE_TYPE: str = "FileSystemCache"
@@ -72,6 +72,8 @@ class Staging(Production):
 
 
 class Develop(Production):
+    DEBUG: bool = strtobool(os.getenv("DEBUG", "False"))
+
     CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "1"))
 
 
@@ -87,4 +89,3 @@ class Test(Production):
     CACHE_DEFAULT_TIMEOUT: int = 1
 
     FORCE_HTTPS: bool = False
-    PREFERRED_URL_SCHEME: str = "http"

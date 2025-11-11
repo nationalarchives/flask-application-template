@@ -7,7 +7,6 @@ services:
         IMAGE_TAG: 0
     environment:
       - ENVIRONMENT_NAME=localhost
-      - RUNTIME=develop
       - ALLOW_INSECURE=true
       - CONFIG=config.Develop
       - DEBUG=true
@@ -20,14 +19,6 @@ services:
       - 81:8080
     volumes:
       - ./:/app
-
-  dev:
-    environment:
-      - CONFIG=config.Test
-    image: ghcr.io/nationalarchives/tna-python-dev:preview
-    volumes:
-      - ./:/app
-
   docs:
     image: squidfunk/mkdocs-material
     volumes:
