@@ -68,6 +68,8 @@ class Production(Features):
 
 
 class Staging(Production):
+    DEBUG: bool = strtobool(os.getenv("DEBUG", "False"))
+    
     CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "60"))
 
 
