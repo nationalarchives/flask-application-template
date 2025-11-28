@@ -3,9 +3,6 @@ name: Run Python tests
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-python@v5
-      with:
-        python-version: 3.13
     - name: Start app container
       run: docker compose up --detach --wait --wait-timeout 300 app || docker compose logs app
       shell: bash
