@@ -22,7 +22,7 @@ RUN mkdir /app/app/static/assets; \
 # Delete source files
 RUN rm -fR /app/src
 
-RUN tna-clean
+# RUN tna-clean  # TODO: Enable once the new images have been published
 
 # Run the application
 CMD ["tna-wsgi", "main:app"]
