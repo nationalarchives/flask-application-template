@@ -91,3 +91,4 @@ class Test(Production):
     CACHE_DEFAULT_TIMEOUT: int = 1
 
     FORCE_HTTPS: bool = False
+    PREFERRED_URL_SCHEME: str = "http"
