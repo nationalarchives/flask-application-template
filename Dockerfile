@@ -10,7 +10,7 @@ ARG BUILD_VERSION
 ENV BUILD_VERSION="$BUILD_VERSION"
 
 # Copy in the application code
-COPY . .
+COPY --chown=app . .
 
 # Install dependencies
 RUN tna-build
