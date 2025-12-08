@@ -22,13 +22,13 @@ docker compose exec app cp -r /app/node_modules/@nationalarchives/frontend/natio
 ### Run tests
 
 ```sh
-docker compose exec dev poetry run python -m pytest
+docker compose exec app poetry run python -m pytest
 ```
 
 ### Format and lint code
 
 ```sh
-docker compose exec dev format
+docker compose exec app format
 ```
 
 ## Environment variables

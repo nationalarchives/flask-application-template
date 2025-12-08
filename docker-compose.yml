@@ -3,11 +3,10 @@ services:
     build:
       context: .
       args:
-        IMAGE: ghcr.io/nationalarchives/tna-python-root
-        IMAGE_TAG: 0
+        IMAGE: ghcr.io/nationalarchives/tna-python-dev
+        IMAGE_TAG: latest
     environment:
       - ENVIRONMENT_NAME=localhost
-      - RUNTIME=develop
       - ALLOW_INSECURE=true
       - CONFIG=config.Develop
       - DEBUG=true
@@ -20,13 +19,9 @@ services:
       - 81:8080
     volumes:
       - ./:/app
-
-  dev:
-    environment:
-      - CONFIG=config.Test
-    image: ghcr.io/nationalarchives/tna-python-dev:preview
-    volumes:
-      - ./:/app
+    healthcheck:
+      start_period: 10s
+      start_interval: 2s
 
   docs:
     image: squidfunk/mkdocs-material
