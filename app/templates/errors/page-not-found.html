@@ -3,7 +3,11 @@
 {%- set status_code = 404 -%}
 
 {% block header %}
-  {{ tnaHeader({"logo": {"href": "/"}}) }}
+  {{ tnaHeader({
+    "logo": {
+      "href": "/"
+    }
+  }) }}
 {% endblock header %}
 
 {% block content %}
