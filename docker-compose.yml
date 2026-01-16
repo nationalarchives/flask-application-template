@@ -7,8 +7,8 @@ services:
         IMAGE_TAG: latest
     environment:
       - ENVIRONMENT_NAME=localhost
-      - ALLOW_INSECURE=true
-      - APPLICATION_PROTOCOL=http
+      # - ALLOW_INSECURE=true
+      # - APPLICATION_PROTOCOL=http
       - CONFIG=config.Develop
       - DEBUG=true
       - SECRET_KEY=abc123
