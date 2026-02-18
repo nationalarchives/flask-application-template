@@ -84,6 +84,7 @@ class Develop(Production):
 
 class Test(Production):
     ENVIRONMENT_NAME: str = "test"
+    BUILD_VERSION: str = "test"
 
     SECRET_KEY: str = "abc123"
     DEBUG: bool = True

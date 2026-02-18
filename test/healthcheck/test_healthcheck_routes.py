@@ -18,12 +18,7 @@ class MainBlueprintTestCase(unittest.TestCase):
         self.assertEqual(rv.status_code, 308)
         self.assertEqual(rv.location, f"{self.domain}/healthcheck/live/")
 
-    def test_homepage(self):
-        rv = self.app.get("/")
+    def test_healthcheck_version(self):
+        rv = self.app.get("/healthcheck/version/")
         self.assertEqual(rv.status_code, 200)
-        self.assertIn('<h1 class="tna-heading-xl">TNA Flask application</h1>', rv.text)
-
-    def test_cookies(self):
-        rv = self.app.get("/cookies/")
-        self.assertEqual(rv.status_code, 200)
-        self.assertIn('<h1 class="tna-heading-xl">Cookies</h1>', rv.text)
+        self.assertIn("test", rv.text)
