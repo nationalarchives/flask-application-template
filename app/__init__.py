@@ -19,11 +19,11 @@ def create_app(config_class):
     cache.init_app(
         app,
         config={
-            "CACHE_TYPE": app.config.get("CACHE_TYPE"),
-            "CACHE_DEFAULT_TIMEOUT": app.config.get("CACHE_DEFAULT_TIMEOUT"),
-            "CACHE_IGNORE_ERRORS": app.config.get("CACHE_IGNORE_ERRORS"),
-            "CACHE_DIR": app.config.get("CACHE_DIR"),
-            "CACHE_REDIS_URL": app.config.get("CACHE_REDIS_URL"),
+            "CACHE_TYPE": app.config["CACHE_TYPE"],
+            "CACHE_DEFAULT_TIMEOUT": app.config["CACHE_DEFAULT_TIMEOUT"],
+            "CACHE_IGNORE_ERRORS": app.config["CACHE_IGNORE_ERRORS"],
+            "CACHE_DIR": app.config["CACHE_DIR"],
+            "CACHE_REDIS_URL": app.config["CACHE_REDIS_URL"],
         },
     )
 
@@ -45,12 +45,10 @@ def create_app(config_class):
             "object-src": csp_none,
         }
         | csp_rules,
-        content_security_policy_report_uri=app.config.get("CSP_REPORT_URL", None),
+        content_security_policy_report_uri=app.config["CSP_REPORT_URL"] or None,
         feature_policy={
-            "fullscreen": app.config.get("CSP_FEATURE_FULLSCREEN", csp_self),
-            "picture-in-picture": app.config.get(
-                "CSP_FEATURE_PICTURE_IN_PICTURE", csp_self
-            ),
+            "fullscreen": app.config["CSP_FEATURE_FULLSCREEN"],
+            "picture-in-picture": app.config["CSP_FEATURE_PICTURE_IN_PICTURE"],
         },
         force_https=app.config["FORCE_HTTPS"],
     )
@@ -84,12 +82,12 @@ def create_app(config_class):
             cookie_preference=cookie_preference,
             now_iso_8601=now_iso_8601,
             app_config={
-                "ENVIRONMENT_NAME": app.config.get("ENVIRONMENT_NAME"),
-                "CONTAINER_IMAGE": app.config.get("CONTAINER_IMAGE"),
-                "BUILD_VERSION": app.config.get("BUILD_VERSION"),
-                "TNA_FRONTEND_VERSION": app.config.get("TNA_FRONTEND_VERSION"),
-                "COOKIE_DOMAIN": app.config.get("COOKIE_DOMAIN"),
-                "GA4_ID": app.config.get("GA4_ID"),
+                "ENVIRONMENT_NAME": app.config["ENVIRONMENT_NAME"],
+                "CONTAINER_IMAGE": app.config["CONTAINER_IMAGE"],
+                "BUILD_VERSION": app.config["BUILD_VERSION"],
+                "TNA_FRONTEND_VERSION": app.config["TNA_FRONTEND_VERSION"],
+                "COOKIE_DOMAIN": app.config["COOKIE_DOMAIN"],
+                "GA4_ID": app.config["GA4_ID"],
             },
             feature={},
         )
