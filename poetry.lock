@@ -26,14 +26,14 @@ files = [
 
 [[package]]
 name = "certifi"
-version = "2026.1.4"
+version = "2026.2.25"
 description = "Python package for providing Mozilla's CA Bundle."
 optional = false
 python-versions = ">=3.7"
 groups = ["main", "dev"]
 files = [
-    {file = "certifi-2026.1.4-py3-none-any.whl", hash = "sha256:9943707519e4add1115f44c2bc244f782c0249876bf51b6599fee1ffbedd685c"},
-    {file = "certifi-2026.1.4.tar.gz", hash = "sha256:ac726dd470482006e014ad384921ed6438c457018f4b3d204aea4281258b2120"},
+    {file = "certifi-2026.2.25-py3-none-any.whl", hash = "sha256:027692e4402ad994f1c42e52a4997a9763c646b73e4096e4d5d6db8af1d6f0fa"},
+    {file = "certifi-2026.2.25.tar.gz", hash = "sha256:e887ab5cee78ea814d3472169153c2d12cd43b14bd03329a39a9c6e2e80bfba7"},
 ]
 
 [[package]]
@@ -502,18 +502,21 @@ fixture = ["fixtures"]
 
 [[package]]
 name = "tna-frontend-jinja"
-version = "0.35.1"
+version = "0.36.0"
 description = "TNA Frontend Jinja templates"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "tna_frontend_jinja-0.35.1-py3-none-any.whl", hash = "sha256:260d21ccf6abb95e7ae200ea7133932b19f8c325221fbdbb6bc2af12cdc47fa2"},
-    {file = "tna_frontend_jinja-0.35.1.tar.gz", hash = "sha256:950612a777171b166806fcd853d1099d3935630d006300019d34218c95e4c3b1"},
+    {file = "tna_frontend_jinja-0.36.0-py3-none-any.whl", hash = "sha256:a3ee3a41f15f93de37fa91bfd3a4e2eef7411a6b785947e222794686aa19aa26"},
+    {file = "tna_frontend_jinja-0.36.0.tar.gz", hash = "sha256:5472c44090add0a1d508a4038a6b1041c9b8330face1603bf73e2ee82d4fbd45"},
 ]
 
 [package.dependencies]
-jinja2 = "*"
+jinja2 = ">=3"
+
+[package.extras]
+wtforms = ["flask-wtf[email]"]
 
 [[package]]
 name = "urllib3"
@@ -554,4 +557,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "8c66a881ce4df786ba91327facebdbab5da9018618b503410d85e9ad4f351b77"
+content-hash = "bccfd7cca5c809969f90b01df70ace219fcbddeb3a7700a3ece3dbf8222cdb0b"
