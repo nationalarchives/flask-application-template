@@ -228,18 +228,6 @@ cachelib = ">=0.9.0"
 Flask = "*"
 
 [[package]]
-name = "flask-talisman"
-version = "1.1.0"
-description = "HTTP security headers for Flask."
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "flask-talisman-1.1.0.tar.gz", hash = "sha256:c5f486f5f54420729f84b3c3850cd63f96e8b033a9629bee66c524ea363797ff"},
-    {file = "flask_talisman-1.1.0-py2.py3-none-any.whl", hash = "sha256:3c42b610ebe49b0e35ca150e179bf51aa1da01e4635b49a674868ea681046208"},
-]
-
-[[package]]
 name = "idna"
 version = "3.11"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -519,6 +507,24 @@ jinja2 = ">=3"
 wtforms = ["flask-wtf[email]"]
 
 [[package]]
+name = "tna-utilities"
+version = "1.4.0rc1"
+description = "A library of common National Archives Python functions"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "tna_utilities-1.4.0rc1-py3-none-any.whl", hash = "sha256:1bd2c77854ce13592241bf28dcefa6dfabafe8d60d9f1660bf6772e875e3faaf"},
+    {file = "tna_utilities-1.4.0rc1.tar.gz", hash = "sha256:c6c4858a78cb808aefb8122ab9ed819a6178f4637bc6df0f65b970fed2bd0a3f"},
+]
+
+[package.dependencies]
+Flask = {version = "*", optional = true, markers = "extra == \"flask\""}
+
+[package.extras]
+flask = ["Flask"]
+
+[[package]]
 name = "urllib3"
 version = "2.6.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -557,4 +563,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "bccfd7cca5c809969f90b01df70ace219fcbddeb3a7700a3ece3dbf8222cdb0b"
+content-hash = "95fed9f5148944d0fcfd8a7c07ea7047bcd76c411932455d6323d2731378eb85"

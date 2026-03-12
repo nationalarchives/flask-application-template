@@ -2,10 +2,10 @@ import logging
 
 from app.lib.cache import cache
 from app.lib.context_processor import cookie_preference, now_iso_8601
-from app.lib.talisman import talisman
 from app.lib.template_filters import slugify
 from flask import Flask
 from jinja2 import ChoiceLoader, PackageLoader
+from tna_utilities.flask.talisman import Talisman
 
 
 def create_app(config_class):
@@ -27,43 +27,12 @@ def create_app(config_class):
         },
     )
 
-    csp_self = "'self'"
-    csp_none = "'none'"
-    default_csp = csp_self
-    csp_rules = {
-        key.replace("_", "-"): value
-        for key, value in app.config.get_namespace(
-            "CSP_", lowercase=True, trim_namespace=True
-        ).items()
-        if not key.startswith("feature_") and value not in [None, [default_csp]]
-    }
-    talisman.init_app(
+    Talisman(
         app,
-        content_security_policy={
-            "default-src": default_csp,
-            "base-uri": csp_none,
-            "object-src": csp_none,
-        }
-        | csp_rules,
-        content_security_policy_report_uri=app.config["CSP_REPORT_URL"] or None,
-        feature_policy={
-            "fullscreen": app.config["CSP_FEATURE_FULLSCREEN"],
-            "picture-in-picture": app.config["CSP_FEATURE_PICTURE_IN_PICTURE"],
-        },
+        content_security_policy=app.config["CONTENT_SECURITY_POLICY"],
+        allow_google_content_security_policy=True,
         force_https=app.config["FORCE_HTTPS"],
     )
-
-    @app.after_request
-    def apply_extra_headers(response):
-        if "X-Permitted-Cross-Domain-Policies" not in response.headers:
-            response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
-        if "Cross-Origin-Embedder-Policy" not in response.headers:
-            response.headers["Cross-Origin-Embedder-Policy"] = "unsafe-none"
-        if "Cross-Origin-Opener-Policy" not in response.headers:
-            response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
-        if "Cross-Origin-Resource-Policy" not in response.headers:
-            response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
-        return response
 
     app.jinja_env.trim_blocks = True
     app.jinja_env.lstrip_blocks = True
