@@ -2,10 +2,10 @@ import logging
 
 from app.lib.cache import cache
 from app.lib.context_processor import cookie_preference, now_iso_8601
+from app.lib.talisman import talisman
 from app.lib.template_filters import slugify
 from flask import Flask
 from jinja2 import ChoiceLoader, PackageLoader
-from tna_utilities.flask.talisman import Talisman
 
 
 def create_app(config_class):
@@ -27,7 +27,7 @@ def create_app(config_class):
         },
     )
 
-    Talisman(
+    talisman.init_app(
         app,
         content_security_policy=app.config["CONTENT_SECURITY_POLICY"],
         allow_google_content_security_policy=True,
