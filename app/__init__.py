@@ -36,14 +36,12 @@ def create_app(config_class):
 
     app.jinja_env.trim_blocks = True
     app.jinja_env.lstrip_blocks = True
-    app.jinja_loader = ChoiceLoader(
+    app.jinja_env.loader = ChoiceLoader(
         [
             PackageLoader("app"),
             PackageLoader("tna_frontend_jinja"),
         ]
     )
-
-    app.add_template_filter(slugify)
 
     @app.context_processor
     def context_processor():
@@ -61,10 +59,12 @@ def create_app(config_class):
             feature={},
         )
 
+    app.add_template_filter(slugify)
+
     from .healthcheck import bp as healthcheck_bp
     from .main import bp as site_bp
 
-    app.register_blueprint(site_bp)
     app.register_blueprint(healthcheck_bp, url_prefix="/healthcheck")
+    app.register_blueprint(site_bp)
 
     return app
