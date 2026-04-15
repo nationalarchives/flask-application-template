@@ -27,54 +27,21 @@ def create_app(config_class):
         },
     )
 
-    csp_self = "'self'"
-    csp_none = "'none'"
-    default_csp = csp_self
-    csp_rules = {
-        key.replace("_", "-"): value
-        for key, value in app.config.get_namespace(
-            "CSP_", lowercase=True, trim_namespace=True
-        ).items()
-        if not key.startswith("feature_") and value not in [None, [default_csp]]
-    }
     talisman.init_app(
         app,
-        content_security_policy={
-            "default-src": default_csp,
-            "base-uri": csp_none,
-            "object-src": csp_none,
-        }
-        | csp_rules,
-        content_security_policy_report_uri=app.config["CSP_REPORT_URL"] or None,
-        feature_policy={
-            "fullscreen": app.config["CSP_FEATURE_FULLSCREEN"],
-            "picture-in-picture": app.config["CSP_FEATURE_PICTURE_IN_PICTURE"],
-        },
+        content_security_policy=app.config["CONTENT_SECURITY_POLICY"],
+        allow_google_content_security_policy=True,
         force_https=app.config["FORCE_HTTPS"],
     )
 
-    @app.after_request
-    def apply_extra_headers(response):
-        if "X-Permitted-Cross-Domain-Policies" not in response.headers:
-            response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
-        if "Cross-Origin-Embedder-Policy" not in response.headers:
-            response.headers["Cross-Origin-Embedder-Policy"] = "unsafe-none"
-        if "Cross-Origin-Opener-Policy" not in response.headers:
-            response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
-        if "Cross-Origin-Resource-Policy" not in response.headers:
-            response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
-        return response
-
     app.jinja_env.trim_blocks = True
     app.jinja_env.lstrip_blocks = True
-    app.jinja_loader = ChoiceLoader(
+    app.jinja_env.loader = ChoiceLoader(
         [
             PackageLoader("app"),
             PackageLoader("tna_frontend_jinja"),
         ]
     )
-
-    app.add_template_filter(slugify)
 
     @app.context_processor
     def context_processor():
@@ -87,15 +54,18 @@ def create_app(config_class):
                 "BUILD_VERSION": app.config["BUILD_VERSION"],
                 "TNA_FRONTEND_VERSION": app.config["TNA_FRONTEND_VERSION"],
                 "COOKIE_DOMAIN": app.config["COOKIE_DOMAIN"],
+                "COOKIE_PREFERENCES_URL": app.config["COOKIE_PREFERENCES_URL"],
                 "GA4_ID": app.config["GA4_ID"],
             },
             feature={},
         )
 
+    app.add_template_filter(slugify)
+
     from .healthcheck import bp as healthcheck_bp
     from .main import bp as site_bp
 
-    app.register_blueprint(site_bp)
     app.register_blueprint(healthcheck_bp, url_prefix="/healthcheck")
+    app.register_blueprint(site_bp)
 
     return app

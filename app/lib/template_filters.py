@@ -1,11 +1,5 @@
-import re
+from tna_utilities.string import slugify as slugify_util
 
 
 def slugify(s):
-    if not s:
-        return s
-    s = s.lower().strip()
-    s = re.sub(r"[^\w\s-]", "", s)
-    s = re.sub(r"[\s_-]+", "-", s)
-    s = re.sub(r"^-+|-+$", "", s)
-    return s
+    return slugify_util(s)
