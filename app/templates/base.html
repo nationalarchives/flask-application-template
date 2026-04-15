@@ -49,12 +49,10 @@
 {% endblock stylesheets %}
 
 {% block cookies %}
-  {% if 'cookie_preferences_set' not in request.cookies or not request.cookies.get('cookie_preferences_set') %}
-    {{ tnaCookieBanner({
-      'serviceName': 'The National Archives',
-      'cookiesUrl': app_config.COOKIE_PREFERENCES_URL
-    }) | indent(6) }}
-  {% endif %}
+  {{ tnaCookieBanner({
+    'serviceName': 'The National Archives',
+    'cookiesUrl': app_config.COOKIE_PREFERENCES_URL
+  }) | indent(6) }}
 {% endblock cookies %}
 
 {% block header %}
