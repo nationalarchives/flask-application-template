@@ -14,7 +14,7 @@ def create_app(config_class):
 
     gunicorn_error_logger = logging.getLogger("gunicorn.error")
     app.logger.handlers.extend(gunicorn_error_logger.handlers)
-    app.logger.setLevel(gunicorn_error_logger.level or "DEBUG")
+    app.logger.setLevel(gunicorn_error_logger.level or "WARNING")
 
     cache.init_app(
         app,
