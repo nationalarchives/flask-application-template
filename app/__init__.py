@@ -1,12 +1,13 @@
 import logging
 import os
 
+from flask import Flask
+from jinja2 import ChoiceLoader, PackageLoader
+
 from app.lib.cache import cache
 from app.lib.context_processor import cookie_preference, now_iso_8601
 from app.lib.talisman import talisman
 from app.lib.template_filters import slugify
-from flask import Flask
-from jinja2 import ChoiceLoader, PackageLoader
 
 
 def create_app(config_class):
