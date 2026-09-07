@@ -49,10 +49,10 @@ def create_app(config_class):
 
     @app.context_processor
     def context_processor():
-        return dict(
-            cookie_preference=cookie_preference,
-            now_iso_8601=now_iso_8601,
-            app_config={
+        return {
+            "cookie_preference": cookie_preference,
+            "now_iso_8601": now_iso_8601,
+            "app_config": {
                 "ENVIRONMENT_NAME": app.config["ENVIRONMENT_NAME"],
                 "CONTAINER_IMAGE": app.config["CONTAINER_IMAGE"],
                 "BUILD_VERSION": app.config["BUILD_VERSION"],
@@ -61,8 +61,8 @@ def create_app(config_class):
                 "COOKIE_PREFERENCES_URL": app.config["COOKIE_PREFERENCES_URL"],
                 "GA4_ID": app.config["GA4_ID"],
             },
-            feature={},
-        )
+            "feature": {},
+        }
 
     app.add_template_filter(slugify)
 
