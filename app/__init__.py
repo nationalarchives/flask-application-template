@@ -5,7 +5,7 @@ from flask import Flask
 from jinja2 import ChoiceLoader, PackageLoader
 
 from app.lib.cache import cache
-from app.lib.context_processor import cookie_preference, now_iso_8601
+from app.lib.context_processor import now_iso_8601
 from app.lib.talisman import talisman
 from app.lib.template_filters import slugify
 
@@ -50,8 +50,6 @@ def create_app(config_class):
     @app.context_processor
     def context_processor():
         return {
-            "cookie_preference": cookie_preference,
-            "now_iso_8601": now_iso_8601,
             "app_config": {
                 "ENVIRONMENT_NAME": app.config["ENVIRONMENT_NAME"],
                 "CONTAINER_IMAGE": app.config["CONTAINER_IMAGE"],
@@ -62,6 +60,7 @@ def create_app(config_class):
                 "GA4_ID": app.config["GA4_ID"],
             },
             "feature": {},
+            "now_iso_8601": now_iso_8601,
         }
 
     app.add_template_filter(slugify)
