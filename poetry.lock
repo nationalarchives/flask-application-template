@@ -612,14 +612,14 @@ fixture = ["fixtures"]
 
 [[package]]
 name = "tna-frontend-jinja"
-version = "1.4.0"
+version = "1.6.0"
 description = "TNA Frontend Jinja templates"
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "tna_frontend_jinja-1.4.0-py3-none-any.whl", hash = "sha256:1031e4102195fa79a9e52dcc255a46857df9a7c29a3acfe939c2827110c7f495"},
-    {file = "tna_frontend_jinja-1.4.0.tar.gz", hash = "sha256:374058bafd75dbae2aa21c9470505d58dfd57e0ab5f8e98864b231aec577ebe1"},
+    {file = "tna_frontend_jinja-1.6.0-py3-none-any.whl", hash = "sha256:35d65233a0c81ecd4c5519b855a14a1ffd6b7a6273eee3276d1f1a924a9d42a9"},
+    {file = "tna_frontend_jinja-1.6.0.tar.gz", hash = "sha256:dad800306422a2decbd07a4bb88b1d8dcbbbd18a1ac61fecbd513a3a0d8530d2"},
 ]
 
 [package.dependencies]
@@ -685,5 +685,5 @@ watchdog = ["watchdog (>=2.3)"]
 
 [metadata]
 lock-version = "2.1"
-python-versions = "^3.13"
-content-hash = "22b6068ff056aa42791ce0f765b2a71117e0e2631fc43c0b85f4955ad98da626"
+python-versions = "~3.15"
+content-hash = "c3b46778f375145d286439b023e0b92354dddf2235427220d461b6b76cb4e08e"
