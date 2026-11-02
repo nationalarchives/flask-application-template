@@ -1,3 +1,6 @@
+[tool.poetry]
+package-mode = false
+
 [tool.poetry.dependencies]
 python = "~3.15"
 flask = "~3.1"
@@ -5,9 +8,6 @@ requests = "~2.34"
 flask-caching = "~2.5"
 tna-utilities = {version = "~1.9", extras = ["flask"]}
 tna-frontend-jinja = "1.6.0"
-
-[tool.poetry]
-package-mode = false
 
 [tool.poetry.group.dev]
 optional = true
