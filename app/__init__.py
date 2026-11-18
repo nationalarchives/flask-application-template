@@ -19,6 +19,18 @@ def create_app(config_class):
         gunicorn_error_logger.level or os.getenv("LOG_LEVEL", "warning").upper()
     )
 
+    proxy_depth = app.config["PROXY_DEPTH"]
+    if proxy_depth:
+        from werkzeug.middleware.proxy_fix import ProxyFix
+
+        app.wsgi_app = ProxyFix(
+            app.wsgi_app,
+            x_host=proxy_depth,
+            x_proto=proxy_depth,
+            x_for=proxy_depth,
+            x_prefix=proxy_depth,
+        )
+
     talisman.init_app(
         app,
         content_security_policy=app.config["CONTENT_SECURITY_POLICY"],

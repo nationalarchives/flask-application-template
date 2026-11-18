@@ -34,6 +34,8 @@ class Production(Features):
     if not SECRET_KEY:
         raise ValueError("SECRET_KEY environment variable is not set")
 
+    PROXY_DEPTH: int = int(os.environ.get("PROXY_DEPTH", "0"))
+
     DEBUG: bool = False
 
     COOKIE_DOMAIN: str = os.environ.get("COOKIE_DOMAIN", ".nationalarchives.gov.uk")
