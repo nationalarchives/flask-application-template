@@ -5,29 +5,11 @@
 ```sh
 # Build and start the container
 docker compose up -d
-```
 
-### Add the static assets
-
-During the first time install, your `app/static/assets` directory will be empty.
-
-As you mount the project directory to the `/app` volume, the static assets from TNA Frontend installed inside the container will be "overwritten" by your empty directory.
-
-To add back in the static assets, run:
-
-```sh
-docker compose exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
-```
-
-### Run tests
-
-```sh
+# Run tests
 docker compose exec app poetry run python -m pytest
-```
 
-### Format and lint code
-
-```sh
+# Format and lint code
 docker compose exec app format
 ```
 
