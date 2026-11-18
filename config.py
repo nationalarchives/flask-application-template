@@ -63,7 +63,7 @@ class Production(Features):
 
 
 class Develop(Production):
-    DEBUG: bool = strtobool(os.getenv("DEBUG", "False"))
+    DEBUG: bool = strtobool(os.getenv("DEBUG", "True"))
 
 
 class Test(Production):

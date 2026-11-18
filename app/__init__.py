@@ -35,6 +35,7 @@ def create_app(config_class):
         app,
         content_security_policy=app.config["CONTENT_SECURITY_POLICY"],
         allow_google_content_security_policy=True,
+        allow_typekit_content_security_policy=True,
         force_https=app.config["FORCE_HTTPS"],
     )
 
