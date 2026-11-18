@@ -30,7 +30,11 @@ class Production(Features):
     except Exception:
         current_app.logger.exception("Error reading the version of TNA Frontend")
 
-    SECRET_KEY: str = os.environ.get("SECRET_KEY", "")
+    SECRET_KEY: str = os.environ.get("SECRET_KEY")
+    if not SECRET_KEY:
+        raise ValueError("SECRET_KEY environment variable is not set")
+
+    PROXY_DEPTH: int = int(os.environ.get("PROXY_DEPTH", "0"))
 
     DEBUG: bool = False
 
@@ -55,28 +59,11 @@ class Production(Features):
     FORCE_HTTPS: bool = strtobool(os.getenv("FORCE_HTTPS", "False"))
     PREFERRED_URL_SCHEME: str = os.getenv("PREFERRED_URL_SCHEME", "https")
 
-    CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "900"))
-    CACHE_IGNORE_ERRORS: bool = True
-    CACHE_DIR: str = os.environ.get("CACHE_DIR", "/tmp")
-    CACHE_REDIS_URL: str = os.environ.get("CACHE_REDIS_URL", "")
-    CACHE_TYPE: str = os.environ.get(
-        "CACHE_TYPE",
-        "RedisCache" if CACHE_REDIS_URL else "FileSystemCache",
-    )
-
     GA4_ID: str = os.environ.get("GA4_ID", "")
 
 
-class Staging(Production):
-    DEBUG: bool = strtobool(os.getenv("DEBUG", "False"))
-
-    CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "60"))
-
-
 class Develop(Production):
-    DEBUG: bool = strtobool(os.getenv("DEBUG", "False"))
-
-    CACHE_DEFAULT_TIMEOUT: int = int(os.environ.get("CACHE_DEFAULT_TIMEOUT", "1"))
+    DEBUG: bool = strtobool(os.getenv("DEBUG", "True"))
 
 
 class Test(Production):
@@ -87,9 +74,6 @@ class Test(Production):
     DEBUG: bool = True
     TESTING: bool = True
     EXPLAIN_TEMPLATE_LOADING: bool = True
-
-    CACHE_TYPE: str = "SimpleCache"
-    CACHE_DEFAULT_TIMEOUT: int = 1
 
     FORCE_HTTPS: bool = False
     PREFERRED_URL_SCHEME: str = "http"
