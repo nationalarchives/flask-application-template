@@ -13,26 +13,6 @@ files = [
 ]
 
 [[package]]
-name = "cachelib"
-version = "0.17.0"
-description = "A collection of cache libraries in the same API interface."
-optional = false
-python-versions = ">=3.11"
-groups = ["main"]
-files = [
-    {file = "cachelib-0.17.0-py3-none-any.whl", hash = "sha256:f83909b6f78741c3a5d76d292d13bf24964ffb13e00ea1d18f92e20599766ce0"},
-    {file = "cachelib-0.17.0.tar.gz", hash = "sha256:f3c7dc8d3c1132ab699681ffdf8a52d341d9425ac1401c538cf0b1d87b1677c8"},
-]
-
-[package.extras]
-dynamodb = ["boto3 (>=1.43.4)"]
-memcached = ["pylibmc (>=1.6.3)"]
-mongodb = ["pymongo (>=4.11)"]
-redis = ["redis (>=6.0.0)"]
-uwsgi = ["uwsgi (>=2.0.28)"]
-valkey = ["valkey (>=6.1.0)"]
-
-[[package]]
 name = "certifi"
 version = "2026.10.23"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -228,14 +208,14 @@ files = [
 
 [[package]]
 name = "click"
-version = "8.5.0"
+version = "8.5.1"
 description = "Composable command line interface toolkit"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "click-8.5.0-py3-none-any.whl", hash = "sha256:255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360"},
-    {file = "click-8.5.0.tar.gz", hash = "sha256:ba0d2089de75ea0310e2dde03160e6ca10009947fb95a182f9b54021bb272e34"},
+    {file = "click-8.5.1-py3-none-any.whl", hash = "sha256:8bb5376d2006950386f8c6427613334a2acadc5f559cb80e638d00b4df957e37"},
+    {file = "click-8.5.1.tar.gz", hash = "sha256:9bbfada76703fd1d784b83eea012e3e8c6a001a876543ef104fa56aaaeb072b4"},
 ]
 
 [[package]]
@@ -274,22 +254,6 @@ werkzeug = ">=3.1.0"
 [package.extras]
 async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
-
-[[package]]
-name = "flask-caching"
-version = "2.5.1"
-description = "Adds caching support to Flask applications."
-optional = false
-python-versions = ">=3.11"
-groups = ["main"]
-files = [
-    {file = "flask_caching-2.5.1-py3-none-any.whl", hash = "sha256:a8591b0315f033d1f10ba67e318b82b3179e548306195ec08e8f0c5f8ef287bf"},
-    {file = "flask_caching-2.5.1.tar.gz", hash = "sha256:f75b451fde3faac0e278da72263818134deca8c4ba6bb07b9b3b238991368dae"},
-]
-
-[package.dependencies]
-cachelib = ">=0.17.0"
-flask = ">=3.0"
 
 [[package]]
 name = "idna"
@@ -612,14 +576,14 @@ fixture = ["fixtures"]
 
 [[package]]
 name = "tna-frontend-jinja"
-version = "1.6.0"
+version = "1.6.1"
 description = "TNA Frontend Jinja templates"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "tna_frontend_jinja-1.6.0-py3-none-any.whl", hash = "sha256:35d65233a0c81ecd4c5519b855a14a1ffd6b7a6273eee3276d1f1a924a9d42a9"},
-    {file = "tna_frontend_jinja-1.6.0.tar.gz", hash = "sha256:dad800306422a2decbd07a4bb88b1d8dcbbbd18a1ac61fecbd513a3a0d8530d2"},
+    {file = "tna_frontend_jinja-1.6.1-py3-none-any.whl", hash = "sha256:fefc75754781d741993de6aebe3b1d87d52572df24bbb31e164e35a9356df2ea"},
+    {file = "tna_frontend_jinja-1.6.1.tar.gz", hash = "sha256:de8c6e136276472717ee19c407af9d9d5c7a9a7e2b3800200bf021aa89de589b"},
 ]
 
 [package.dependencies]
@@ -686,4 +650,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "~3.15"
-content-hash = "c3b46778f375145d286439b023e0b92354dddf2235427220d461b6b76cb4e08e"
+content-hash = "186536bc2cf110cad473df2c0c9d95a20410ef00f45c4e2b5b7e0b91b261e178"
