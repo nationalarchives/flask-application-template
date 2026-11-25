@@ -1,5 +1,6 @@
 import json
 import os
+import tomllib
 from typing import ClassVar
 
 from flask import current_app
@@ -29,6 +30,20 @@ class Production(Features):
             )
     except Exception:
         current_app.logger.exception("Error reading the version of TNA Frontend")
+    TNA_FRONTEND_JINJA_VERSION = ""
+    try:
+        poetry_lock_toml_path = os.path.join(
+            os.path.realpath(os.path.dirname(__file__)),
+            "poetry.lock",
+        )
+        with open(poetry_lock_toml_path, "rb") as poetry_lock_toml:
+            data = tomllib.load(poetry_lock_toml)
+            for package in data.get("package", []):
+                if package.get("name") == "tna-frontend-jinja":
+                    TNA_FRONTEND_JINJA_VERSION = package.get("version", "")
+                    break
+    except Exception:
+        current_app.logger.exception("Error reading the version of TNA Frontend Jinja")
 
     SECRET_KEY: str = os.environ.get("SECRET_KEY")
     if not SECRET_KEY:
